@@ -4,9 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.muflidevs.foodapp.ui.activity.ui.theme.FoodAppTheme
+import com.muflidevs.foodapp.ui.screen.LoginScreen
+import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,21 +19,26 @@ class LoginActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoodAppTheme {
-                LoginPage()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    LoginPage(modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
 }
 
-@Composable
-fun LoginPage() {
 
+@Composable
+fun LoginPage(modifier: Modifier) {
+    LoginScreen(modifier = modifier)
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginPagePreview() {
     FoodAppTheme {
-        LoginPage()
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            LoginPage(modifier = Modifier.padding(innerPadding))
+        }
     }
 }

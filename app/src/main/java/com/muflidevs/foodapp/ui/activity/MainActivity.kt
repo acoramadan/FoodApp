@@ -1,4 +1,4 @@
-package com.muflidevs.foodapp
+package com.muflidevs.foodapp.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

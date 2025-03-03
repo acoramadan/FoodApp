@@ -1,6 +1,5 @@
 package com.muflidevs.foodapp.ui.design_system
 
-import android.content.res.Resources.Theme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -48,8 +46,8 @@ fun MyTextField(
     hint: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPassword: Boolean = true,
-    onLeadingClick: () -> Unit ={},
-    onTrailingClick: () -> Unit ={},
+    onLeadingClick: () -> Unit = {},
+    onTrailingClick: () -> Unit = {},
 ) {
     if (isPassword) {
         PasswordTextField(
@@ -76,6 +74,7 @@ fun MyTextField(
         )
     }
 }
+
 @Composable
 fun TextTextField(
     modifier: Modifier = Modifier,
@@ -85,8 +84,8 @@ fun TextTextField(
     textFieldState: TextFieldState,
     hint: String,
     keyboardType: KeyboardType = KeyboardType.Text,
-    onLeadingClick: () -> Unit ={},
-    onTrailingClick: () -> Unit ={},
+    onLeadingClick: () -> Unit = {},
+    onTrailingClick: () -> Unit = {},
 ) {
     BasicTextField(
         state = textFieldState,
@@ -104,8 +103,8 @@ fun TextTextField(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (leadingIcon != null) {
-                        Icon (
-                           imageVector = leadingIcon,
+                        Icon(
+                            imageVector = leadingIcon,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
                             modifier = Modifier.clickable { onLeadingClick() }
@@ -128,7 +127,7 @@ fun TextTextField(
                     }
 
                     if (trailingIcon != null) {
-                        Icon (
+                        Icon(
                             imageVector = trailingIcon,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
@@ -163,8 +162,8 @@ fun PasswordTextField(
     trailingText: String? = null,
     textFieldState: TextFieldState,
     hint: String,
-    onLeadingClick: () -> Unit ={},
-    onTrailingClick: () -> Unit ={},
+    onLeadingClick: () -> Unit = {},
+    onTrailingClick: () -> Unit = {},
 ) {
     BasicSecureTextField(
         state = textFieldState,
@@ -181,13 +180,15 @@ fun PasswordTextField(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (leadingIcon != null) {
-                        Icon (
+                        Icon(
                             imageVector = leadingIcon,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
                             modifier = Modifier.clickable { onLeadingClick() }
                         )
                     }
+                    Spacer(modifier = Modifier.width(16.dp))
+
 
                     Box(
                         modifier = Modifier.weight(1f)
@@ -204,7 +205,7 @@ fun PasswordTextField(
                     }
 
                     if (trailingIcon != null) {
-                        Icon (
+                        Icon(
                             imageVector = trailingIcon,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),

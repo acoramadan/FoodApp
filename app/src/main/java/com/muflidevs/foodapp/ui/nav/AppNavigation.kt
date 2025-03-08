@@ -26,6 +26,6 @@ fun AppNavigation(modifier: Modifier) {
                 navController = navController
             )
         }
-        composable("home") { HomeScreen(modifier = modifier, navController = navController) }
+        composable("home") { HomeScreen(modifier = modifier) }
     }
 }

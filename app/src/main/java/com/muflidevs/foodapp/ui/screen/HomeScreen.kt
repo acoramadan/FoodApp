@@ -1,6 +1,6 @@
 package com.muflidevs.foodapp.ui.screen
 
-import android.content.res.Resources
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,89 +16,110 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.ui.nav.BottomNavigationItem
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 import com.muflidevs.foodapp.utils.Converter
+import com.muflidevs.foodapp.utils.Helper
+import java.util.Calendar
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navController: NavController? = null
 ) {
+    val homeNavController = rememberNavController()
     val bottomNavItems: List<BottomNavigationItem> =
         listOf(
             BottomNavigationItem(
-                name = "Beranda",
+                name = "beranda",
                 unselectedIcon = Icons.Outlined.Home,
                 selectedIcon = Icons.Filled.Home
             ),
             BottomNavigationItem(
-                name = "Laporan",
+                name = "laporan",
                 unselectedIcon = Converter.convertImageToVector(R.drawable.laporan_icon_btm),
                 selectedIcon = Converter.convertImageToVector(R.drawable.laporan_icon_btm_fill)
             ),
             BottomNavigationItem(
-                name = "Masukan",
+                name = "masukan",
                 unselectedIcon = Icons.Outlined.Add,
                 selectedIcon = Icons.Filled.Add
             ),
             BottomNavigationItem(
-                name = "Rekap",
+                name = "rekap",
                 unselectedIcon = Converter.convertImageToVector(R.drawable.rekapan_icon_btm),
                 selectedIcon = Converter.convertImageToVector(R.drawable.rekapan_icon_btm_fill)
             ),
             BottomNavigationItem(
-                name = "Akun",
+                name = "akun",
                 unselectedIcon = Icons.Outlined.Person,
                 selectedIcon = Icons.Filled.Person
             )
         )
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
+
+    val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val selectedItemIndex = bottomNavItems.indexOfFirst { it.name == currentRoute }
+    var selectedYear by remember { mutableStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Scaffold(
+            contentWindowInsets = WindowInsets(0.dp),
+            topBar = {
+                Helper.DynamicTopAppBar(
+                    currentRoute = currentRoute,
+                    onYearSelected = { year -> selectedYear = year },
+                )
+            },
             bottomBar = {
                 NavigationBar {
                     bottomNavItems.forEachIndexed { index, item ->
                         NavigationBarItem(
                             selected = selectedItemIndex == index,
                             onClick = {
-                                selectedItemIndex = index
-                                navController?.navigate(item.name)
+                                homeNavController.navigate(item.name) {
+                                    popUpTo(homeNavController.graph.startDestinationId)
+                                    launchSingleTop = true
+                                }
                             },
                             icon = {
                                 Icon(
-                                    imageVector =
-                                        if (index == selectedItemIndex)
-                                            item.selectedIcon
-                                        else
-                                            item.unselectedIcon,
+                                    imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
                                     contentDescription = item.name
                                 )
-                            }
+                            },
+                            label = { Text(item.name) }
                         )
                     }
                 }
             }
         ) { paddingValues ->
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                color = MaterialTheme.colorScheme.background
+            NavHost(
+                navController = homeNavController,
+                startDestination = "beranda",
+                modifier = modifier.padding(paddingValues)
             ) {
+                composable("beranda") { BerandaScreen(modifier = modifier) }
+                composable("laporan") { LaporanScreen(modifier = modifier) }
+                composable("masukan") { InputScreen(modifier = modifier) }
+                composable("rekap") { RekapScreen(modifier = modifier) }
+                composable("akun") { AkunScreen(modifier = modifier) }
             }
         }
     }

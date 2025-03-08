@@ -8,4 +8,5 @@ import com.muflidevs.foodapp.R
 object Converter {
     @Composable
     fun convertImageToVector(image: Int) : ImageVector = ImageVector.vectorResource(id = image)
+
 }

@@ -111,22 +111,6 @@ fun RegisterScreen(
             )
         }
 
-        Text(
-            text = "Or, Register with...",
-            fontSize = 14.sp,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .alpha(0.5f)
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            AuthOption(image = R.drawable.facebook)
-            AuthOption(image = R.drawable.google)
-        }
-
         Row (
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ){

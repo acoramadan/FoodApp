@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                     AppNavigation(modifier = Modifier.padding(innerPadding))
                 }
             }
+
         }
     }
 }

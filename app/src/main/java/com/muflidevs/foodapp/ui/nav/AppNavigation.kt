@@ -16,7 +16,7 @@ fun AppNavigation(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = "home"
     ) {
         composable("splash") { SplashScreen(modifier = modifier, navController = navController) }
         composable("login") { LoginScreen(modifier = modifier, navController = navController) }

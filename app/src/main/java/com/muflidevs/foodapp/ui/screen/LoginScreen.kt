@@ -17,6 +17,7 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,12 +26,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.ui.design_system.AuthOption
 import com.muflidevs.foodapp.ui.design_system.MyTextField
+import com.muflidevs.foodapp.ui.theme.FoodAppTheme
+import com.muflidevs.foodapp.ui.theme.orange
 
 @Composable
 fun LoginScreen(
@@ -52,7 +56,6 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .fillMaxWidth(0.25f)
             )
-
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Login",
@@ -74,7 +77,7 @@ fun LoginScreen(
             leadingIcon = Icons.Outlined.Lock,
             trailingText = "Forgot?",
             modifier = Modifier.fillMaxWidth(),
-            isPassword = true
+            isPassword = true,
         )
         OutlinedButton(
             onClick = {},
@@ -83,24 +86,9 @@ fun LoginScreen(
             Text(
                 text = "Login",
                 fontSize = 17.sp,
+                color = orange,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
-        }
-
-        Text(
-            text = "Or, Login with...",
-            fontSize = 14.sp,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .alpha(0.5f)
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            AuthOption(image = R.drawable.facebook)
-            AuthOption(image = R.drawable.google)
         }
 
         Row (
@@ -113,7 +101,7 @@ fun LoginScreen(
             Text(
                 text = "Register",
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.primary,
+                color = orange,
                 modifier = Modifier
                     .clickable {
                         navController?.navigate("register")
@@ -121,6 +109,16 @@ fun LoginScreen(
                     .padding(1.dp)
             )
             Spacer(modifier = Modifier.height(1.dp))
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LoginScreenPreview(modifier: Modifier = Modifier) {
+    FoodAppTheme {
+        Scaffold(modifier = Modifier.padding()) { innerPadding ->
+            LoginScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }

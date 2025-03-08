@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
+import com.muflidevs.foodapp.ui.theme.orange
 
 
 @Composable
@@ -138,7 +139,7 @@ fun TextTextField(
                     } else if (trailingText != null) {
                         Text(
                             text = trailingText,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = orange,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier
                                 .padding(end = 4.dp)
@@ -216,7 +217,7 @@ fun PasswordTextField(
                     } else if (trailingText != null) {
                         Text(
                             text = trailingText,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = orange,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier
                                 .padding(end = 4.dp)

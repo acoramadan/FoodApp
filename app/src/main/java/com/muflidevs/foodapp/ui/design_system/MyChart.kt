@@ -12,6 +12,7 @@ import co.yml.charts.ui.barchart.models.BarChartData
 import co.yml.charts.ui.barchart.models.BarData
 import co.yml.charts.ui.barchart.models.BarStyle
 import com.muflidevs.foodapp.data.remote.entity.Profit
+import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.orange
 import com.muflidevs.foodapp.utils.Converter.calculateYAxisSteps
 import com.muflidevs.foodapp.utils.Helper
@@ -35,51 +36,51 @@ fun BarchartWithSolidBars() {
     val barData = listOf<BarData>(
         BarData(
             point = Point(0f, 10f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(1f, 20f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(2f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(3f, 40f),
-            color = orange,
-        ),
+            color = DarkGreen,
+            ),
         BarData(
             point = Point(4f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(5f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(6f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(7f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(8f, 3f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(9f, 20f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(10f, 40f),
-            color = orange,
+            color = DarkGreen,
         ),
         BarData(
             point = Point(11f, 60f),
-            color = orange,
+            color = DarkGreen,
         )
 
     )

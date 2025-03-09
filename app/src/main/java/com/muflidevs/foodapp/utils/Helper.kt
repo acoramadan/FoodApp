@@ -67,6 +67,13 @@ object Helper {
         return (currentYear - rangeBefore..currentYear).toList()
     }
 
+    private fun formatDate(calendar: Calendar): String {
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1 // +1 karena bulan dimulai dari 0
+        val year = calendar.get(Calendar.YEAR)
+        return "$day/$month/$year" // Format: DD/MM/YYYY
+    }
+
     fun getMonths(): List<String> = listOf<String>(
         "Januari", "Februari", "Maret",
         "April", "Mei", "Juni",
@@ -77,7 +84,10 @@ object Helper {
     @Composable
     fun DynamicTopAppBar(
         currentRoute: String?,
-        onYearSelected: (Int) -> Unit,
+        onYearSelected: (Int) -> Unit?,
+        onMonthSelected: (Int) -> Unit?,
+        onDismiss: (() -> Unit)?,
+        onDateSelected: ((Calendar) -> Unit)?
     ) {
         when (currentRoute) {
             "beranda" -> {
@@ -99,38 +109,79 @@ object Helper {
                     }
                 )
             }
+
             "masukan" -> {
                 TopAppBar(
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .fillMaxWidth(),
+                    backgroundColor = DarkGreen,
                     title = {
-                        Text("Input Data")
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(DarkGreen)
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            NativeDatePicker(onDateSelected = onDateSelected, onDismiss = onDismiss)
+                        }
                     }
                 )
             }
+
             "laporan" -> {
                 TopAppBar(
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .fillMaxWidth(),
+                    backgroundColor = DarkGreen,
                     title = {
-                        Text("Laporan")
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(DarkGreen)
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            NativeDatePicker(onDateSelected = onDateSelected, onDismiss = onDismiss)
+                        }
                     }
                 )
             }
+
             "rekap" -> {
                 TopAppBar(
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .fillMaxWidth(),
+                    backgroundColor = DarkGreen,
                     title = {
-                        Text("Rekap")
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(DarkGreen)
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            MonthDatePickerDropDown(onMonthSelected = onMonthSelected)
+                        }
                     }
                 )
             }
+
             "akun" -> {
                 TopAppBar(
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .fillMaxWidth(),
+                    backgroundColor = DarkGreen,
                     title = {
                         Text("Akun")
                     }
                 )
             }
+
             else -> {
                 TopAppBar(
                     modifier = Modifier.statusBarsPadding(),
@@ -141,8 +192,9 @@ object Helper {
             }
         }
     }
+
     @Composable
-    fun YearDatePickerDropdown(onYearSelected: (Int) -> Unit) {
+    fun YearDatePickerDropdown(onYearSelected: (Int) -> Unit?) {
         var expanded by remember { mutableStateOf(false) }
         var selectedYear by remember {
             mutableIntStateOf(
@@ -168,13 +220,18 @@ object Helper {
                     backgroundColor = DarkGreen
                 ),
             ) {
-                Column (modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.calendar_icon),
                         contentDescription = "calendar",
                         modifier = Modifier.size(12.dp)
                     )
-                    Box (modifier = Modifier.fillMaxWidth().wrapContentHeight()){
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()) {
                         Text(
                             text = "$selectedYear",
                             modifier = Modifier.align(Alignment.Center),
@@ -183,7 +240,9 @@ object Helper {
                         Icon(
                             imageVector = Icons.Outlined.KeyboardArrowDown,
                             contentDescription = "calendar",
-                            modifier = Modifier.size(40.dp).align(Alignment.CenterEnd)
+                            modifier = Modifier
+                                .size(40.dp)
+                                .align(Alignment.CenterEnd)
                         )
                     }
                 }
@@ -209,7 +268,7 @@ object Helper {
     }
 
     @Composable
-    fun MonthDatePickerDropDown(onMonthSelected: (Int) -> Unit) {
+    fun MonthDatePickerDropDown(onMonthSelected: (Int) -> Unit?) {
         var expanded by remember { mutableStateOf(false) }
         var selectedMonth by remember { mutableIntStateOf(1) }
 
@@ -218,47 +277,105 @@ object Helper {
         Box(modifier = Modifier.wrapContentSize()) {
             Button(
                 onClick = { expanded = true },
+                modifier = Modifier
+                    .width(150.dp)
+                    .border(
+                        width = 2.dp,
+                        color = Color.White,
+                        shape = CutCornerShape(3.dp)
+                    ),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    backgroundColor = Color.Green
+                    backgroundColor = DarkGreen
                 )
             ) {
-                Text(months[selectedMonth - 1])
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                months.forEachIndexed { index, month ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedMonth = index + 1
-                            onMonthSelected(selectedMonth)
-                            expanded = false
-                        }
-                    ) {
-                        Text(month)
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.calendar_icon),
+                        contentDescription = "calendar",
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()) {
+                        Text(
+                            text = months[selectedMonth - 1],
+                            modifier = Modifier.align(Alignment.Center),
+                            fontSize = 11.sp
+                        )
+                        Icon(
+                            imageVector = Icons.Outlined.KeyboardArrowDown,
+                            contentDescription = "calendar",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .align(Alignment.CenterEnd)
+                        )
                     }
                 }
             }
         }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            months.forEachIndexed { index, month ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedMonth = index + 1
+                        onMonthSelected(selectedMonth)
+                        expanded = false
+                    }
+                ) {
+                    Text(month)
+                }
+            }
+        }
     }
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun NativeDatePicker(onDateSelected: (Calendar) -> Unit, onDismiss: () -> Unit) {
+    fun NativeDatePicker(
+        onDateSelected: ((Calendar) -> Unit)?,
+        onDismiss: (() -> Unit)?,
+    ) {
         val datePickerState = rememberDatePickerState()
-        var showDialog by remember { mutableStateOf(true) }
+        var showDialog by remember { mutableStateOf(false) }
+        var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
+
+        Button(
+            onClick = { showDialog = true },
+            modifier = Modifier
+                .width(150.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.White,
+                    shape = CutCornerShape(3.dp)
+                ),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.White,
+                backgroundColor = DarkGreen
+            ),
+        ) {
+            Text(text = formatDate(selectedDate))
+        }
 
         if (showDialog) {
             DatePickerDialog(
-                onDismissRequest = onDismiss,
+                onDismissRequest = {
+                    onDismiss?.invoke()
+                    showDialog = false
+                },
                 confirmButton = {
                     Button(onClick = {
                         val selectedDateMillis = datePickerState.selectedDateMillis
                         if (selectedDateMillis != null) {
                             val calendar = millisToCalendar(selectedDateMillis)
-                            onDateSelected(calendar)
+                            selectedDate = calendar
+                            onDateSelected?.invoke(calendar)
                         }
                         showDialog = false
                     }) {
@@ -268,7 +385,7 @@ object Helper {
                 dismissButton = {
                     Button(onClick = {
                         showDialog = false
-                        onDismiss()
+                        onDismiss?.invoke()
                     }) {
                         Text("Batal")
                     }

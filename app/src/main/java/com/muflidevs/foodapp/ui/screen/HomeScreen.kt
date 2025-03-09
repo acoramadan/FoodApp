@@ -1,6 +1,5 @@
 package com.muflidevs.foodapp.ui.screen
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -20,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -77,7 +76,9 @@ fun HomeScreen(
     val currentRoute = navBackStackEntry?.destination?.route
 
     val selectedItemIndex = bottomNavItems.indexOfFirst { it.name == currentRoute }
-    var selectedYear by remember { mutableStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
+    var selectedYear by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
+    var selectedMonth by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.MONTH)) }
+    var selectedDate by remember { mutableStateOf<Calendar?>(null) }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = DarkGreen
@@ -88,6 +89,9 @@ fun HomeScreen(
                 Helper.DynamicTopAppBar(
                     currentRoute = currentRoute,
                     onYearSelected = { year -> selectedYear = year },
+                    onMonthSelected = {month -> selectedMonth = month},
+                    onDateSelected = {date -> selectedDate = date},
+                    onDismiss = {}
                 )
             },
 

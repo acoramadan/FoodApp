@@ -1,20 +1,35 @@
 package com.muflidevs.foodapp.utils
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CutCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Button
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.ButtonDefaults
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenu
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenuItem
 //noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,9 +40,16 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.muflidevs.foodapp.ui.theme.Orange80
-import java.time.Year
+import androidx.compose.ui.graphics.Color
+
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.ui.theme.DarkGreen
+
 
 import java.util.Calendar
 
@@ -45,7 +67,7 @@ object Helper {
         return (currentYear - rangeBefore..currentYear).toList()
     }
 
-    private fun getMonths(): List<String> = listOf<String>(
+    fun getMonths(): List<String> = listOf<String>(
         "Januari", "Februari", "Maret",
         "April", "Mei", "Juni",
         "Juli", "Agustus", "September",
@@ -56,7 +78,6 @@ object Helper {
     fun DynamicTopAppBar(
         currentRoute: String?,
         onYearSelected: (Int) -> Unit,
-        modifier: Modifier = Modifier
     ) {
         when (currentRoute) {
             "beranda" -> {
@@ -64,11 +85,14 @@ object Helper {
                     modifier = Modifier
                         .statusBarsPadding()
                         .fillMaxWidth(),
-
+                    backgroundColor = DarkGreen,
                     title = {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(DarkGreen)
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
                         ) {
                             YearDatePickerDropdown(onYearSelected = onYearSelected)
                         }
@@ -127,16 +151,47 @@ object Helper {
         }
 
         val years = remember { getDynamicYears() }
-
         Box(
             modifier = Modifier.wrapContentSize()
         ) {
-            Button(onClick = { expanded = true }) {
-                Text("$selectedYear")
+            Button(
+                onClick = { expanded = true },
+                modifier = Modifier
+                    .width(150.dp)
+                    .border(
+                        width = 2.dp,
+                        color = Color.White,
+                        shape = CutCornerShape(3.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    backgroundColor = DarkGreen
+                ),
+            ) {
+                Column (modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.calendar_icon),
+                        contentDescription = "calendar",
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Box (modifier = Modifier.fillMaxWidth().wrapContentHeight()){
+                        Text(
+                            text = "$selectedYear",
+                            modifier = Modifier.align(Alignment.Center),
+                            fontSize = 11.sp
+                        )
+                        Icon(
+                            imageVector = Icons.Outlined.KeyboardArrowDown,
+                            contentDescription = "calendar",
+                            modifier = Modifier.size(40.dp).align(Alignment.CenterEnd)
+                        )
+                    }
+                }
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.fillMaxWidth(0.5f)
             ) {
                 years.forEach { year ->
                     DropdownMenuItem(
@@ -156,12 +211,18 @@ object Helper {
     @Composable
     fun MonthDatePickerDropDown(onMonthSelected: (Int) -> Unit) {
         var expanded by remember { mutableStateOf(false) }
-        var selectedMonth by remember { mutableStateOf(1) }
+        var selectedMonth by remember { mutableIntStateOf(1) }
 
         val months = getMonths()
 
         Box(modifier = Modifier.wrapContentSize()) {
-            Button(onClick = { expanded = true }) {
+            Button(
+                onClick = { expanded = true },
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    backgroundColor = Color.Green
+                )
+            ) {
                 Text(months[selectedMonth - 1])
             }
 

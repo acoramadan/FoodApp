@@ -19,9 +19,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import java.time.LocalDate
 import java.util.Calendar
+import kotlin.io.path.Path
+import kotlin.io.path.moveTo
 
 object Custom {
     @Composable
@@ -148,4 +156,24 @@ object Custom {
     private fun Calendar.toLocalDate(): LocalDate {
         return LocalDate.of(get(Calendar.YEAR), get(Calendar.MONTH) + 1, get(Calendar.DAY_OF_MONTH))
     }
+}
+
+class ArrowShape(private val tipSize: Float) : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ) = Outline.Generic(
+        Path().apply {
+            moveTo(0f, 0f)
+            lineTo(size.width - tipSize, 0f)
+
+            lineTo(size.width, size.height / 2)
+            lineTo(size.width - tipSize, size.height)
+
+            lineTo(0f, size.height)
+            lineTo(0f, 0f)
+            close()
+        }
+    )
 }

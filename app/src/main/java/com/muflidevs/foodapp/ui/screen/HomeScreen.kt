@@ -1,5 +1,6 @@
 package com.muflidevs.foodapp.ui.screen
 
+import android.graphics.Color
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.ui.nav.BottomNavigationItem
+import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 import com.muflidevs.foodapp.utils.Converter
 import com.muflidevs.foodapp.utils.Helper
@@ -40,6 +42,7 @@ import java.util.Calendar
 fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
+
     val homeNavController = rememberNavController()
     val bottomNavItems: List<BottomNavigationItem> =
         listOf(
@@ -77,7 +80,7 @@ fun HomeScreen(
     var selectedYear by remember { mutableStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = DarkGreen
     ) {
         Scaffold(
             contentWindowInsets = WindowInsets(0.dp),
@@ -87,6 +90,7 @@ fun HomeScreen(
                     onYearSelected = { year -> selectedYear = year },
                 )
             },
+
             bottomBar = {
                 NavigationBar {
                     bottomNavItems.forEachIndexed { index, item ->
@@ -97,6 +101,7 @@ fun HomeScreen(
                                     popUpTo(homeNavController.graph.startDestinationId)
                                     launchSingleTop = true
                                 }
+
                             },
                             icon = {
                                 Icon(
@@ -115,7 +120,7 @@ fun HomeScreen(
                 startDestination = "beranda",
                 modifier = modifier.padding(paddingValues)
             ) {
-                composable("beranda") { BerandaScreen(modifier = modifier) }
+                composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }
                 composable("laporan") { LaporanScreen(modifier = modifier) }
                 composable("masukan") { InputScreen(modifier = modifier) }
                 composable("rekap") { RekapScreen(modifier = modifier) }

@@ -1,0 +1,184 @@
+{
+  "laporan": [
+    {
+      "namaSayur": "Bayam",
+      "hargaSatuan": 5000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 500000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 50,
+          "totalHarga": 250000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 50,
+          "totalHarga": 250000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Kangkung",
+      "hargaSatuan": 4000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 400000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 30,
+          "totalHarga": 120000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 70,
+          "totalHarga": 280000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Sawi",
+      "hargaSatuan": 6000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 600000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 40,
+          "totalHarga": 240000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 60,
+          "totalHarga": 360000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Wortel",
+      "hargaSatuan": 7000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 700000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 20,
+          "totalHarga": 140000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 80,
+          "totalHarga": 560000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Brokoli",
+      "hargaSatuan": 10000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 1000000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 50,
+          "totalHarga": 500000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 50,
+          "totalHarga": 500000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Kubis",
+      "hargaSatuan": 8000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 800000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 60,
+          "totalHarga": 480000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 40,
+          "totalHarga": 320000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Selada",
+      "hargaSatuan": 9000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 900000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 70,
+          "totalHarga": 630000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 30,
+          "totalHarga": 270000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Buncis",
+      "hargaSatuan": 5500,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 550000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 80,
+          "totalHarga": 440000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 20,
+          "totalHarga": 110000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Terong",
+      "hargaSatuan": 4500,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 450000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 90,
+          "totalHarga": 405000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 10,
+          "totalHarga": 45000
+        }
+      ]
+    },
+    {
+      "namaSayur": "Cabai",
+      "hargaSatuan": 12000,
+      "totalJumlahDibeli": 100,
+      "totalHargaPengeluaran": 1200000,
+      "listPetani": [
+        {
+          "namaPetani": "Pak Anas",
+          "jumlahDibeli": 50,
+          "totalHarga": 600000
+        },
+        {
+          "namaPetani": "Pak Bahrum",
+          "jumlahDibeli": 50,
+          "totalHarga": 600000
+        }
+      ]
+    }
+  ]
+}

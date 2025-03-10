@@ -121,7 +121,7 @@ fun HomeScreen(
         ) { paddingValues ->
             NavHost(
                 navController = homeNavController,
-                startDestination = "beranda",
+                startDestination = "laporan",
                 modifier = modifier.padding(paddingValues)
             ) {
                 composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import androidx.compose.foundation.lazy.items
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Button
@@ -32,13 +34,20 @@ import com.muflidevs.foodapp.R
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import com.muflidevs.foodapp.ui.design_system.LaporanCards
 import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.LightYellow20
 import com.muflidevs.foodapp.ui.view_model.RawViewModel
 
 @Composable
-fun LaporanScreen(modifier: Modifier = Modifier, viewModel: RawViewModel = viewModel()) {
+fun LaporanScreen(
+    modifier: Modifier = Modifier,
+    viewModel: RawViewModel = viewModel(),
+    navController: NavController
+) {
     val context = LocalContext.current
     val laporanList by viewModel.sayuranList.collectAsState()
 
@@ -95,7 +104,13 @@ fun LaporanScreen(modifier: Modifier = Modifier, viewModel: RawViewModel = viewM
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(laporanList) { sayuran ->
-                LaporanCards(sayuran = sayuran)
+                val json = URLEncoder.encode(Gson().toJson(sayuran), StandardCharsets.UTF_8.toString())
+                LaporanCards(
+                    sayuran = sayuran,
+                    onClick = {
+                        navController.navigate("detail_laporan_screen/${json}")
+                    }
+                )
             }
         }
     }

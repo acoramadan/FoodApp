@@ -29,7 +29,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.data.remote.entity.Sayuran
 import com.muflidevs.foodapp.ui.nav.BottomNavigationItem
 import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
@@ -125,10 +127,18 @@ fun HomeScreen(
                 modifier = modifier.padding(paddingValues)
             ) {
                 composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }
-                composable("laporan") { LaporanScreen(modifier = modifier) }
+                composable("laporan") { LaporanScreen(modifier = modifier, navController = homeNavController) }
                 composable("masukan") { InputScreen(modifier = modifier) }
                 composable("rekap") { RekapScreen(modifier = modifier) }
                 composable("akun") { AkunScreen(modifier = modifier) }
+                composable("detail_laporan_screen/{sayuran}") { backStackEntry ->
+                    val json = backStackEntry.arguments?.getString("sayuran")
+                    val sayuran = Gson().fromJson(json, Sayuran::class.java)
+                    DetailLaporanScreen(
+                        sayuran = sayuran,
+                        onBackPressed = { homeNavController.popBackStack() }
+                    )
+                }
             }
         }
     }

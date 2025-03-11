@@ -1,5 +1,6 @@
 package com.muflidevs.foodapp.ui.design_system
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +25,12 @@ import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.data.remote.entity.Sayuran
 
 @Composable
-fun LaporanCards(sayuran: Sayuran) {
+fun LaporanCards(sayuran: Sayuran,onClick: () -> Unit?) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable{ onClick() },
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -37,16 +39,15 @@ fun LaporanCards(sayuran: Sayuran) {
                 imageVector = Icons.Filled.MoreVert,
                 contentDescription = "icon details",
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
+                    .align(Alignment.CenterEnd)
             )
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         text = sayuran.namaSayur,
@@ -60,9 +61,9 @@ fun LaporanCards(sayuran: Sayuran) {
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         text = "${sayuran.totalJumlahDibeli} kg",

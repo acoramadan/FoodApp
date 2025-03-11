@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.muflidevs.foodapp.ui.screen.DetailLaporanScreen
 import com.muflidevs.foodapp.ui.screen.HomeScreen
 import com.muflidevs.foodapp.ui.screen.LoginScreen
 import com.muflidevs.foodapp.ui.screen.RegisterScreen

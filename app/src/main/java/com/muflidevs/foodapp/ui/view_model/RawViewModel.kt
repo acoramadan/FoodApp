@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import android.util.Log
-import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.data.remote.entity.InputanResponse
 import com.muflidevs.foodapp.data.remote.entity.Sayuran
 
 class RawViewModel : ViewModel() {
@@ -23,6 +23,9 @@ class RawViewModel : ViewModel() {
     val sayuranList: StateFlow<List<Sayuran>> get() = _sayuranList
 
     val result = MutableStateFlow<Sayuran?>(null)
+
+    private val _inputanResult = MutableStateFlow<InputanResponse?>(null)
+    val inputanResult: StateFlow<InputanResponse?> get() = _inputanResult
 
     fun loadLaporanFromJson(context: Context, resourcesId: Int) {
         viewModelScope.launch {
@@ -39,6 +42,20 @@ class RawViewModel : ViewModel() {
         }
     }
 
+    fun loadLaporanFromJsonInputan(context: Context, resourcesId: Int) {
+        viewModelScope.launch {
+            val jsonString = withContext(Dispatchers.IO) {
+                val inputStream: InputStream = context.resources.openRawResource(resourcesId)
+                val size: Int = inputStream.available()
+                val buffer = ByteArray(size)
+                inputStream.read(buffer)
+                inputStream.close()
+                String(buffer, Charsets.UTF_8)
+            }
+            _dataJson.value = jsonString
+           parseJsonDataInputan(jsonString)
+        }
+    }
 
     fun loadLaporanFromJsonById(id: Int): StateFlow<Sayuran?> {
         viewModelScope.launch {
@@ -59,5 +76,10 @@ class RawViewModel : ViewModel() {
         val laporan = gson.fromJson(jsonString, Laporan::class.java)
         Log.d("LoadLaporan", "Sayuran ditemukan: ${laporan.laporan}")
         _sayuranList.value = laporan.laporan
+    }
+    private fun parseJsonDataInputan(jsonString: String) {
+        val inputan = Gson().fromJson(jsonString, InputanResponse::class.java)
+        Log.d("Load Laporan", "Data dummy : ${inputan}")
+        _inputanResult.value = inputan
     }
 }

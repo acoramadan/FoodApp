@@ -1,5 +1,6 @@
 package com.muflidevs.foodapp.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,7 +39,7 @@ import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 import com.muflidevs.foodapp.utils.Converter
 import com.muflidevs.foodapp.utils.Helper
 import java.util.Calendar
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -86,7 +87,6 @@ fun HomeScreen(
         color = DarkGreen
     ) {
         Scaffold(
-            contentWindowInsets = WindowInsets(0.dp),
             topBar = {
                 Helper.DynamicTopAppBar(
                     currentRoute = currentRoute,
@@ -119,19 +119,20 @@ fun HomeScreen(
                         )
                     }
                 }
-            }
-        ) { paddingValues ->
+            },
+            contentWindowInsets = WindowInsets(bottom = 10.dp)
+        ) { _ ->
             NavHost(
                 navController = homeNavController,
-                startDestination = "laporan",
-                modifier = modifier.padding(paddingValues)
+                startDestination = "masukan",
+                modifier = modifier.padding(top = 32.dp).fillMaxSize()
             ) {
                 composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }
                 composable("laporan") { LaporanScreen(modifier = modifier, navController = homeNavController) }
                 composable("masukan") { InputScreen(modifier = modifier) }
                 composable("rekap") { RekapScreen(modifier = modifier) }
                 composable("akun") { AkunScreen(modifier = modifier) }
-                composable("detail_laporan_screen/{sayuran}") { backStackEntry ->
+                composable("detail_laporan/{sayuran}") { backStackEntry ->
                     val json = backStackEntry.arguments?.getString("sayuran")
                     val sayuran = Gson().fromJson(json, Sayuran::class.java)
                     DetailLaporanScreen(

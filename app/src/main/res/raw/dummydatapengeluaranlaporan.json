@@ -4,7 +4,7 @@
       "id": 1,
       "namaSayur": "Bayam",
       "hargaSatuan": 5000,
-      "totalJumlahDibeli": 100,
+      "totalJumlahDibeli": 80,
       "totalHargaPengeluaran": 500000,
       "listPetani": [
         {
@@ -23,7 +23,7 @@
       "id": 2,
       "namaSayur": "Kangkung",
       "hargaSatuan": 4000,
-      "totalJumlahDibeli": 100,
+      "totalJumlahDibeli": 50,
       "totalHargaPengeluaran": 400000,
       "listPetani": [
         {
@@ -42,7 +42,7 @@
       "id": 3,
       "namaSayur": "Sawi",
       "hargaSatuan": 6000,
-      "totalJumlahDibeli": 100,
+      "totalJumlahDibeli": 40,
       "totalHargaPengeluaran": 600000,
       "listPetani": [
         {

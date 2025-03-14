@@ -29,6 +29,7 @@ import androidx.compose.material.Text
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -48,7 +49,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.data.remote.entity.Sayuran
 import com.muflidevs.foodapp.ui.theme.DarkGreen
+import com.muflidevs.foodapp.ui.theme.LightGreen
+import com.muflidevs.foodapp.ui.theme.ModerateGreen
 
 
 import java.util.Calendar
@@ -82,6 +86,23 @@ object Helper {
     )
 
     @Composable
+    fun RandomCardColor(modifier: Modifier = Modifier, total: Int): Color {
+        if (total < 0) {
+            return Color.Transparent
+        }
+        if (total >= 1 && total <= 50) {
+            return Color.White
+        }
+        else if (total  > 50 && total <= 65) {
+            return LightGreen
+        }
+        else if (total  > 65 && total <= 100) {
+            return ModerateGreen
+        } else {
+            return DarkGreen
+        }
+    }
+    @Composable
     fun DynamicTopAppBar(
         currentRoute: String?,
         onYearSelected: (Int) -> Unit?,
@@ -109,7 +130,30 @@ object Helper {
                     }
                 )
             }
-
+            "detail_laporan/{sayuran}" -> {
+                TopAppBar(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .fillMaxWidth(),
+                    backgroundColor = DarkGreen,
+                    title = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(DarkGreen)
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowBack,
+                                contentDescription = "Icon back",
+                                modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                            )
+                            Text("Detail Laporan")
+                        }
+                    }
+                )
+            }
             "masukan" -> {
                 TopAppBar(
                     modifier = Modifier

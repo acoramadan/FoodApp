@@ -1,0 +1,48 @@
+{
+  "message": "Success",
+  "data": [
+    {
+      "id": 1,
+      "namaSayur": "Kangkung",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/1.jpeg"
+    },
+    {
+      "id": 2,
+      "namaSayur": "Timun",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/2.jpeg"
+    },
+    {
+      "id": 3,
+      "namaSayur": "Labu",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/3.jpeg"
+    },
+    {
+      "id": 4,
+      "namaSayur": "Bawang Putih",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/4.jpeg"
+    },
+    {
+      "id": 5,
+      "namaSayur": "Bawang Batang",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/5.jpeg"
+    },
+    {
+      "id": 6,
+      "namaSayur": "Bawang Merah",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/6.jpeg"
+    },
+    {
+      "id": 7,
+      "namaSayur": "Kentang",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/7.jpeg"
+    },
+    {
+      "id": 8,
+      "namaSayur": "Wortel",
+      "gambarUrl": "https://raw.githubusercontent.com/acoramadan/assets/main/8.jpeg"
+    }
+  ],
+  "error": null,
+  "timeRequest": "2023-10-05T14:48:00Z",
+  "idRequest": "12345"
+}

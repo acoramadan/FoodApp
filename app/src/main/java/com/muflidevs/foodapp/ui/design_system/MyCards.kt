@@ -17,12 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.data.remote.entity.Sayuran
+import com.muflidevs.foodapp.utils.Helper
 
 @Composable
 fun LaporanCards(sayuran: Sayuran,onClick: () -> Unit?) {
@@ -32,7 +34,12 @@ fun LaporanCards(sayuran: Sayuran,onClick: () -> Unit?) {
             .padding(vertical = 8.dp)
             .clickable{ onClick() },
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Helper.RandomCardColor(total = sayuran.totalJumlahDibeli ?: 0),
+            contentColor = Color.Black
+        )
+
     ) {
         Box {
             Icon(
@@ -50,7 +57,7 @@ fun LaporanCards(sayuran: Sayuran,onClick: () -> Unit?) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = sayuran.namaSayur,
+                        text = "${sayuran.namaSayur}",
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         fontSize = 12.sp
                     )

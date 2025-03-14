@@ -33,9 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.muflidevs.foodapp.R
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.muflidevs.foodapp.ui.design_system.LaporanCards
 import com.muflidevs.foodapp.ui.theme.DarkGreen
@@ -62,7 +60,7 @@ fun LaporanScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
@@ -99,7 +97,7 @@ fun LaporanScreen(
             }
         }
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 64.dp),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -108,7 +106,7 @@ fun LaporanScreen(
                 LaporanCards(
                     sayuran = sayuran,
                     onClick = {
-                        navController.navigate("detail_laporan_screen/${json}")
+                        navController.navigate("detail_laporan/${json}")
                     }
                 )
             }

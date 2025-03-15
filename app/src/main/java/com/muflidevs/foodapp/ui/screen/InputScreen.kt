@@ -20,11 +20,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ButtonDefaults
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Divider
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FabPosition
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.FloatingActionButton
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -32,8 +31,6 @@ import androidx.compose.material.Scaffold
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.VerticalDivider
@@ -44,8 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.muflidevs.foodapp.ui.theme.DarkGreen
-import com.muflidevs.foodapp.ui.theme.LightYellow20
 import com.muflidevs.foodapp.ui.view_model.RawViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +57,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.ui.design_system.MyFab
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 import com.muflidevs.foodapp.utils.Helper
 
@@ -80,23 +76,9 @@ fun InputScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    Log.d("FAB", "Edit button clicked")
-                },
-                modifier = Modifier
-                    .padding(16.dp)
-                    .padding(bottom = 55.dp)
-                    .size(40.dp),
-                backgroundColor = DarkGreen
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Add,
-                    contentDescription = "Edit FAB",
-                    tint = Color.White
-                )
-            }
-        },
+            MyFab(isClickedPengeluaran)
+
+       },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Column(

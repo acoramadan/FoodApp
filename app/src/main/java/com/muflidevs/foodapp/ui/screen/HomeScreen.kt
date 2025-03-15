@@ -1,6 +1,9 @@
 package com.muflidevs.foodapp.ui.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,6 +27,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -36,7 +41,6 @@ import com.muflidevs.foodapp.data.remote.entity.Sayuran
 import com.muflidevs.foodapp.ui.nav.BottomNavigationItem
 import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
-import com.muflidevs.foodapp.utils.Converter
 import com.muflidevs.foodapp.utils.Helper
 import java.util.Calendar
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,7 +48,6 @@ import java.util.Calendar
 fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
-
     val homeNavController = rememberNavController()
     val bottomNavItems: List<BottomNavigationItem> =
         listOf(
@@ -55,8 +58,8 @@ fun HomeScreen(
             ),
             BottomNavigationItem(
                 name = "laporan",
-                unselectedIcon = Converter.convertImageToVector(R.drawable.laporan_icon_btm),
-                selectedIcon = Converter.convertImageToVector(R.drawable.laporan_icon_btm_fill)
+                unselectedIcon = ImageVector.vectorResource(R.drawable.laporan_icon_btm),
+                selectedIcon = ImageVector.vectorResource(R.drawable.laporan_icon_btm_fill)
             ),
             BottomNavigationItem(
                 name = "masukan",
@@ -65,8 +68,8 @@ fun HomeScreen(
             ),
             BottomNavigationItem(
                 name = "rekap",
-                unselectedIcon = Converter.convertImageToVector(R.drawable.rekapan_icon_btm),
-                selectedIcon = Converter.convertImageToVector(R.drawable.rekapan_icon_btm_fill)
+                unselectedIcon = ImageVector.vectorResource(R.drawable.rekapan_icon_btm),
+                selectedIcon = ImageVector.vectorResource(R.drawable.rekapan_icon_btm_fill)
             ),
             BottomNavigationItem(
                 name = "akun",
@@ -76,9 +79,13 @@ fun HomeScreen(
         )
 
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute by remember(navBackStackEntry) {
+        mutableStateOf(navBackStackEntry?.destination?.route)
+    }
 
-    val selectedItemIndex = bottomNavItems.indexOfFirst { it.name == currentRoute }
+    val selectedItemIndex by remember(currentRoute) {
+        mutableIntStateOf(bottomNavItems.indexOfFirst { it.name == currentRoute })
+    }
     var selectedYear by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
     var selectedMonth by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.MONTH)) }
     var selectedDate by remember { mutableStateOf<Calendar?>(null) }
@@ -103,11 +110,16 @@ fun HomeScreen(
                         NavigationBarItem(
                             selected = selectedItemIndex == index,
                             onClick = {
-                                homeNavController.navigate(item.name) {
-                                    popUpTo(homeNavController.graph.startDestinationId)
-                                    launchSingleTop = true
+                                if (currentRoute != item.name) {
+                                    homeNavController.navigate(item.name) {
+                                        popUpTo(homeNavController.graph.startDestinationId) {
+                                            inclusive = false
+                                            saveState = true
+                                        }
+                                        restoreState = true
+                                        launchSingleTop = true
+                                    }
                                 }
-
                             },
                             icon = {
                                 Icon(
@@ -125,7 +137,9 @@ fun HomeScreen(
             NavHost(
                 navController = homeNavController,
                 startDestination = "laporan",
-                modifier = modifier.padding(top = 32.dp).fillMaxSize()
+                modifier = modifier.padding(top = 32.dp).fillMaxSize(),
+                enterTransition = { fadeIn(animationSpec = tween(300)) },
+                exitTransition = { fadeOut(animationSpec = tween(300)) }
             ) {
                 composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }
                 composable("laporan") { LaporanScreen(modifier = modifier, navController = homeNavController) }

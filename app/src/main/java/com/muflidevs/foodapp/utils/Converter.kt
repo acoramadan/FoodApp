@@ -7,9 +7,6 @@ import com.muflidevs.foodapp.R
 import kotlin.math.ceil
 
 object Converter {
-    @Composable
-    fun convertImageToVector(image: Int) : ImageVector = ImageVector.vectorResource(id = image)
-
     fun calculateYAxisSteps(profits: List<Long>, maxSteps: Int = 6): Pair<Int, Long> {
         val maxProfit = profits.maxOrNull() ?: 0
 

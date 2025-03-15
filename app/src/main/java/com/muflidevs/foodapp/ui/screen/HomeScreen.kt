@@ -124,7 +124,7 @@ fun HomeScreen(
         ) { _ ->
             NavHost(
                 navController = homeNavController,
-                startDestination = "masukan",
+                startDestination = "laporan",
                 modifier = modifier.padding(top = 32.dp).fillMaxSize()
             ) {
                 composable("beranda") { BerandaScreen(modifier = modifier, selectedYear = selectedYear) }

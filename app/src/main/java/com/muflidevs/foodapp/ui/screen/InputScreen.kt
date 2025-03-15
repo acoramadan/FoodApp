@@ -2,11 +2,14 @@ package com.muflidevs.foodapp.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,17 +20,23 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FabPosition
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FloatingActionButton
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ArrowDropDown
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,6 +48,9 @@ import com.muflidevs.foodapp.ui.theme.DarkGreen
 import com.muflidevs.foodapp.ui.theme.LightYellow20
 import com.muflidevs.foodapp.ui.view_model.RawViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -51,6 +63,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
+import com.muflidevs.foodapp.utils.Helper
 
 @Composable
 fun InputScreen(
@@ -59,6 +72,7 @@ fun InputScreen(
 ) {
     val context = LocalContext.current
     val inputanList by viewModel.inputanResult.collectAsState()
+    var isClickedPengeluaran by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         viewModel.loadLaporanFromJsonInputan(context, R.raw.dummyinputan)
@@ -95,42 +109,54 @@ fun InputScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .height(IntrinsicSize.Min),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Button(
-                    onClick = {},
+                    onClick = {isClickedPengeluaran = true},
                     colors = ButtonDefaults.buttonColors(
                         contentColor = Color.Black,
-                        backgroundColor = LightYellow20
+                        backgroundColor = Helper.changeButtonColorPengeluaran(isClickedPengeluaran)
                     )
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Pengeluaran")
                         Icon(
-                            imageVector = Icons.Outlined.ArrowDropDown,
-                            contentDescription = "Icon dropDown"
+                            imageVector = Icons.Outlined.KeyboardArrowUp,
+                            contentDescription = "Icon dropDown",
+                            tint = Color.Red
                         )
                     }
                 }
-
+                VerticalDivider(
+                    color = Helper.isPengeluaranClicked(isClickedPengeluaran),
+                    thickness = 1.dp,
+                    modifier = Modifier.align(Alignment.CenterVertically).fillMaxHeight()
+                )
                 Button(
-                    onClick = {},
+                    onClick = {isClickedPengeluaran = false},
                     colors = ButtonDefaults.buttonColors(
                         contentColor = Color.White,
-                        backgroundColor = DarkGreen
+                        backgroundColor = Helper.changeButtonColorPemasukan(isClickedPengeluaran)
                     )
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Pemasukan")
                         Icon(
-                            imageVector = Icons.Outlined.KeyboardArrowUp,
-                            contentDescription = "Icon arrowUp"
+                            imageVector = Icons.Outlined.KeyboardArrowDown,
+                            contentDescription = "Icon arrowUp",
+                            tint = Color.Green
                         )
                     }
                 }
             }
+            Divider(
+                color = Helper.isPengeluaranClicked(isClickedPengeluaran),
+                thickness = 3.dp,
+                modifier = Modifier.padding(3.dp).padding(end = 24.dp, start = 24.dp)
+            )
             Text(
                 text = "Sayuran",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
@@ -160,6 +186,11 @@ fun InputScreen(
                                 modifier = Modifier
                                     .size(48.dp)
                                     .clip(CircleShape)
+                                    .border(
+                                        2.dp,
+                                        Helper.isPengeluaranClicked(isClickedPengeluaran),
+                                        CircleShape
+                                    )
                             )
                             Text(
                                 text = item.namaSayur ?: "null",
@@ -181,6 +212,18 @@ fun InputScreen(
                     .fillMaxWidth()
                     .padding(start = 16.dp),
                 textAlign = TextAlign.Start
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun InputScreenPreview(modifier: Modifier = Modifier) {
+    FoodAppTheme {
+        androidx.compose.material3.Scaffold(modifier = Modifier.padding()) { innerPadding ->
+            InputScreen(
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

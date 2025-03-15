@@ -51,7 +51,9 @@ import androidx.compose.ui.unit.sp
 import com.muflidevs.foodapp.R
 import com.muflidevs.foodapp.data.remote.entity.Sayuran
 import com.muflidevs.foodapp.ui.theme.DarkGreen
+import com.muflidevs.foodapp.ui.theme.DarkYellow
 import com.muflidevs.foodapp.ui.theme.LightGreen
+import com.muflidevs.foodapp.ui.theme.LightYellow20
 import com.muflidevs.foodapp.ui.theme.ModerateGreen
 
 
@@ -84,6 +86,20 @@ object Helper {
         "Juli", "Agustus", "September",
         "Oktober", "November", "Desember"
     )
+
+    fun changeButtonColorPengeluaran(isClicked: Boolean) : Color {
+        return if(isClicked) DarkYellow
+        else LightYellow20
+    }
+
+    fun changeButtonColorPemasukan(isClicked: Boolean) : Color {
+        return if (isClicked) ModerateGreen
+        else DarkGreen
+    }
+    fun isPengeluaranClicked(isClicked: Boolean) : Color {
+        return if (isClicked) LightYellow20
+        else DarkGreen
+    }
 
     @Composable
     fun RandomCardColor(modifier: Modifier = Modifier, total: Int): Color {

@@ -3,6 +3,7 @@ package com.muflidevs.foodapp.ui.screen
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -43,11 +44,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.muflidevs.foodapp.ui.view_model.RawViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
@@ -57,6 +60,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.muflidevs.foodapp.R
+import com.muflidevs.foodapp.data.remote.entity.Sayuran
 import com.muflidevs.foodapp.ui.design_system.MyFab
 import com.muflidevs.foodapp.ui.theme.FoodAppTheme
 import com.muflidevs.foodapp.utils.Helper
@@ -69,7 +73,7 @@ fun InputScreen(
     val context = LocalContext.current
     val inputanList by viewModel.inputanResult.collectAsState()
     var isClickedPengeluaran by remember { mutableStateOf(true) }
-
+    var listInputSayuran = remember {mutableStateListOf<Sayuran>()}
     LaunchedEffect(Unit) {
         viewModel.loadLaporanFromJsonInputan(context, R.raw.dummyinputan)
     }
@@ -134,11 +138,6 @@ fun InputScreen(
                     }
                 }
             }
-            Divider(
-                color = Helper.isPengeluaranClicked(isClickedPengeluaran),
-                thickness = 3.dp,
-                modifier = Modifier.padding(3.dp).padding(end = 24.dp, start = 24.dp)
-            )
             Text(
                 text = "Sayuran",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
@@ -147,6 +146,11 @@ fun InputScreen(
                     .fillMaxWidth()
                     .padding(start = 16.dp),
                 textAlign = TextAlign.Start
+            )
+            Divider(
+                color = Helper.isPengeluaranClicked(isClickedPengeluaran),
+                thickness = 3.dp,
+                modifier = Modifier.padding(3.dp).padding(end = 24.dp, start = 24.dp)
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(4),
@@ -170,9 +174,19 @@ fun InputScreen(
                                     .clip(CircleShape)
                                     .border(
                                         2.dp,
-                                        Helper.isPengeluaranClicked(isClickedPengeluaran),
+                                        if(listInputSayuran.contains(item)) Color.Gray else Helper.isPengeluaranClicked(isClickedPengeluaran),
                                         CircleShape
                                     )
+                                    .graphicsLayer(alpha = if(listInputSayuran.contains(item)) 0.5f else 1f)
+                                    .clickable {
+                                        if (listInputSayuran.contains(item)) {
+                                            listInputSayuran.remove(item)
+                                        } else {
+                                            listInputSayuran.add(item)
+                                            Log.d("Input Screen","$item")
+                                            Log.d("Inpute Screen","List: $listInputSayuran")
+                                        }
+                                    }
                             )
                             Text(
                                 text = item.namaSayur ?: "null",
@@ -183,9 +197,16 @@ fun InputScreen(
 
                             )
                         }
+
                     }
                 }
+
             }
+            Divider(
+                color = Helper.isPengeluaranClicked(isClickedPengeluaran),
+                thickness = 3.dp,
+                modifier = Modifier.padding(3.dp).padding(end = 24.dp, start = 24.dp)
+            )
             Text(
                 text = "Lainnya",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
